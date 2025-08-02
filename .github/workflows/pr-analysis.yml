@@ -1,0 +1,46 @@
+name: PR Analysis with Flowise Agent
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  analyze-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Call Flowise Agent Flow
+        id: call-flowise
+        run: |
+          response=$(curl -s -w "\n%{http_code}" http://flowise-alb-2056808100.ap-south-1.elb.amazonaws.com/agentflows \
+            -H "Content-Type: application/json" \
+            -d '{
+              "form": {
+                "owner": "'"$OWNER"'",
+                "repo": "'"$REPO"'",
+                "pullNumber": "'"$PULL_NUMBER"'"
+              }
+            }')
+
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | head -n -1)
+
+          if [ "$http_code" -eq 200 ]; then
+            echo "analysis_success=true" >> $GITHUB_OUTPUT
+            echo "final_response<<EOF" >> $GITHUB_OUTPUT
+            echo "$response_body" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "analysis_success=false" >> $GITHUB_OUTPUT
+            echo "final_response<<EOF" >> $GITHUB_OUTPUT
+            echo "Failed" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          PULL_NUMBER: ${{ github.event.pull_request.number }}
