@@ -20,8 +20,8 @@ export class Calorie extends BaseEntity {
   @Column({ type: 'int' })
   calories: number;
 
-  @Column({ type: 'int', nullable: true })
-  userId?: number;
+  @Column({ type: 'text', nullable: true })
+  userId?: string;
 
   @ManyToOne(() => User, (user) => user.calories)
   user?: User;
@@ -40,4 +40,10 @@ export class Calorie extends BaseEntity {
 
   @Column({ type: 'text', nullable: true })
   quantumData?: string;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  quantity?: number;
+
+  @Column({ type: 'text', nullable: true })
+  unit?: string;
 }

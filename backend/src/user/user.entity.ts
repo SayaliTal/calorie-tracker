@@ -14,8 +14,8 @@ import { Calorie } from '../calorie/calorie.entity';
 @Entity()
 @Unique('UQ_user_email', ['email'])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'text' })
   email: string;
