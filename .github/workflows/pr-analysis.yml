@@ -15,7 +15,7 @@ jobs:
       - name: Call Flowise Agent Flow
         id: call-flowise
         run: |
-          response=$(curl -s -w "\n%{http_code}" http://flowise-alb-2056808100.ap-south-1.elb.amazonaws.com/agentflows \
+          response=$(curl -s -w "\n%{http_code}" http://flowise-alb-2056808100.ap-south-1.elb.amazonaws.com/api/v1/prediction/0ce532da-3f42-41c9-8e89-c4f23e937ccb \
             -H "Content-Type: application/json" \
             -d '{
               "form": {
