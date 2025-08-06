@@ -1,0 +1,518 @@
+.crazy-ai-features {
+  background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+  min-height: 100vh;
+  padding: 2rem;
+  color: #00ff88;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  overflow: hidden;
+}
+
+.crazy-ai-features::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(0, 255, 136, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 0, 136, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(136, 0, 255, 0.1) 0%,
+      transparent 50%
+    );
+  animation: quantum-field 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes quantum-field {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: scale(1.2) rotate(90deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.8) rotate(180deg);
+    opacity: 0.3;
+  }
+  75% {
+    transform: scale(1.1) rotate(270deg);
+    opacity: 0.7;
+  }
+}
+
+.crazy-ai-features h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88;
+  animation: quantum-glow 3s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes quantum-glow {
+  0% {
+    text-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88;
+  }
+  100% {
+    text-shadow: 0 0 30px #00ff88, 0 0 60px #00ff88, 0 0 80px #00ff88;
+  }
+}
+
+.quantum-chemistry-section,
+.cfd-section,
+.molecular-dynamics-section {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #00ff88;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+  transition: all 0.3s ease;
+}
+
+.quantum-chemistry-section:hover,
+.cfd-section:hover,
+.molecular-dynamics-section:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+  border-color: #ff0088;
+}
+
+.quantum-chemistry-section::before,
+.cfd-section::before,
+.molecular-dynamics-section::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00ff88, #ff0088, #8800ff, #00ff88);
+  border-radius: 15px;
+  z-index: -1;
+  animation: border-rotation 4s linear infinite;
+}
+
+@keyframes border-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.quantum-chemistry-section h3,
+.cfd-section h3,
+.molecular-dynamics-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #00ff88;
+  text-shadow: 0 0 10px #00ff88;
+  position: relative;
+}
+
+.quantum-chemistry-section h3::after,
+.cfd-section h3::after,
+.molecular-dynamics-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00ff88, #ff0088, #8800ff);
+  animation: line-pulse 2s ease-in-out infinite;
+}
+
+@keyframes line-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scaleX(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.quantum-button,
+.cfd-button,
+.md-button {
+  background: linear-gradient(45deg, #00ff88, #0088ff);
+  border: none;
+  border-radius: 25px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.quantum-button::before,
+.cfd-button::before,
+.md-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.quantum-button:hover::before,
+.cfd-button:hover::before,
+.md-button:hover::before {
+  left: 100%;
+}
+
+.quantum-button:hover,
+.cfd-button:hover,
+.md-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.8);
+  background: linear-gradient(45deg, #ff0088, #8800ff);
+}
+
+.quantum-button:disabled,
+.cfd-button:disabled,
+.md-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  animation: disabled-pulse 1s ease-in-out infinite;
+}
+
+@keyframes disabled-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.quantum-results,
+.cfd-results,
+.md-results {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 1px solid #00ff88;
+}
+
+.quantum-results h4,
+.cfd-results h4,
+.md-results h4 {
+  color: #00ff88;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+.quantum-metrics,
+.cfd-metrics,
+.md-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem;
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  transition: all 0.3s ease;
+}
+
+.metric:hover {
+  background: rgba(0, 255, 136, 0.2);
+  border-color: #00ff88;
+  transform: translateX(5px);
+}
+
+.metric span:first-child {
+  font-weight: bold;
+  color: #00ff88;
+}
+
+.metric span:last-child {
+  color: #ff0088;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+.physics-constants {
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #8800ff;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.physics-constants::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(136, 0, 255, 0.1) 10px,
+    rgba(136, 0, 255, 0.1) 20px
+  );
+  animation: constant-flow 20s linear infinite;
+}
+
+@keyframes constant-flow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.physics-constants h3 {
+  color: #8800ff;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 15px #8800ff;
+  position: relative;
+  z-index: 1;
+}
+
+.constants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.constant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(136, 0, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(136, 0, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.constant::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(136, 0, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.constant:hover::before {
+  left: 100%;
+}
+
+.constant:hover {
+  background: rgba(136, 0, 255, 0.2);
+  border-color: #8800ff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(136, 0, 255, 0.3);
+}
+
+.constant span:first-child {
+  font-weight: bold;
+  color: #8800ff;
+}
+
+.constant span:last-child {
+  color: #ff8800;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Quantum particle effects */
+@keyframes particle-float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg);
+    opacity: 0.8;
+  }
+}
+
+.crazy-ai-features::after {
+  content: '⚛️ 🌊 🔬';
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  animation: particle-float 6s ease-in-out infinite;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .crazy-ai-features {
+    padding: 1rem;
+  }
+
+  .crazy-ai-features h2 {
+    font-size: 1.8rem;
+  }
+
+  .quantum-chemistry-section,
+  .cfd-section,
+  .molecular-dynamics-section {
+    padding: 1rem;
+  }
+
+  .quantum-metrics,
+  .cfd-metrics,
+  .md-metrics,
+  .constants-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric,
+  .constant {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
+
+/* Matrix-style background effect */
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.matrix-rain::before {
+  content: '01';
+  position: absolute;
+  color: rgba(0, 255, 136, 0.1);
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  animation: matrix-rain 10s linear infinite;
+  left: calc(random() * 100vw);
+}
+
+/* Quantum entanglement effect */
+.entanglement-effect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 30% 70%,
+      rgba(0, 255, 136, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 0, 136, 0.05) 0%,
+      transparent 50%
+    );
+  animation: entanglement-pulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes entanglement-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}

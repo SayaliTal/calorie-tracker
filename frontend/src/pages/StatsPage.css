@@ -1,285 +1,826 @@
-.logout-btn {
-  min-width: 120px;
-  box-shadow: 0 2px 8px rgba(60,60,120,0.07);
-  font-size: 16px;
-  font-weight: 600;
-  padding: 0.7em 2em;
-}
-/* Ensure main content is not hidden behind header and uses theme background */
-.stats-container {
-  margin: 0 auto;
-  padding-top: 80px; /* adjust if your header is taller */
-  min-height: calc(100vh - 80px);
-  background: var(--color-background);
-  box-sizing: border-box;
-}
-
-.stats-title {
-  font-weight: 700;
-  font-size: 2rem;
-  color: var(--color-primary);
-  margin-bottom: 32px;
+.stats-page {
+  background: linear-gradient(
+    135deg,
+    #0a0a0a,
+    #1a1a2e,
+    #16213e,
+    #0f3460,
+    #533483
+  );
+  min-height: 100vh;
+  padding: 2rem;
+  color: #00ff88;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  overflow: hidden;
 }
 
-.stats-flex-col {
+.stats-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(0, 255, 136, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 0, 136, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(136, 0, 255, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 60% 60%,
+      rgba(255, 136, 0, 0.1) 0%,
+      transparent 50%
+    );
+  animation: quantum-field-rotation 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes quantum-field-rotation {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: scale(1.3) rotate(90deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.7) rotate(180deg);
+    opacity: 0.3;
+  }
+  75% {
+    transform: scale(1.2) rotate(270deg);
+    opacity: 0.7;
+  }
+}
+
+.stats-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  text-shadow: 0 0 30px #00ff88, 0 0 60px #00ff88, 0 0 90px #00ff88;
+  animation: quantum-glow-pulse 4s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(45deg, #00ff88, #ff0088, #8800ff, #00ff88);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: quantum-glow-pulse 4s ease-in-out infinite alternate,
+    gradient-shift 8s ease-in-out infinite;
+}
+
+@keyframes quantum-glow-pulse {
+  0% {
+    text-shadow: 0 0 30px #00ff88, 0 0 60px #00ff88, 0 0 90px #00ff88;
+  }
+  100% {
+    text-shadow: 0 0 40px #00ff88, 0 0 80px #00ff88, 0 0 120px #00ff88,
+      0 0 160px #00ff88;
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.timeframe-selector {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
 }
 
-.stats-flex-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.stats-flex-row-inner {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.add-meal-btn {
-  background: var(--color-primary);
-  color: var(--color-contrast);
+.timeframe-selector button {
+  background: linear-gradient(45deg, #00ff88, #0088ff);
   border: none;
-  border-radius: 8px;
-  padding: 0.7em 2em;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 25px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
   cursor: pointer;
-  min-width: 120px;
-  box-shadow: 0 2px 8px rgba(60,60,120,0.07);
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
 }
 
-.timeframe-btn-group {
-  display: flex;
-  gap: 8px;
-  background: var(--color-background);
-  border-radius: 8px;
-  padding: 0.3em 0.7em;
+.timeframe-selector button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
 
-.timeframe-btn {
-  border: none;
-  border-radius: 6px;
-  padding: 0.3em 1em;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 15px;
-  transition: background 0.2s;
-  background: transparent;
-  color: var(--color-primary);
+.timeframe-selector button:hover::before {
+  left: 100%;
 }
 
-.timeframe-btn.active {
-  background: var(--color-primary);
-  color: var(--color-contrast);
+.timeframe-selector button:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.8);
+  background: linear-gradient(45deg, #ff0088, #8800ff);
 }
 
-  margin-left: 16px;
-  background: var(--color-warning);
-  color: var(--color-contrast);
-  border: none;
-  border-radius: 8px;
-  padding: 0.7em 2em;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  min-width: 120px;
-  transition: background 0.2s;
+.timeframe-selector button.active {
+  background: linear-gradient(45deg, #ff0088, #8800ff);
+  box-shadow: 0 0 30px rgba(255, 0, 136, 0.7);
+  animation: active-pulse 2s ease-in-out infinite;
 }
 
-/* Use theme background for chart container, support dark mode */
-.stats-chart-container {
-  background: var(--color-surface, #fff);
+@keyframes active-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #00ff88;
   border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(16,185,129,0.07);
-  padding: 32px;
-  height: 350px;
-  width: 100%; /* Ensure full width */
-  min-width: 0; /* Prevent overflow in flex layouts */
-  box-sizing: border-box;
+  padding: 2rem;
+  position: relative;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+  transition: all 0.4s ease;
+  overflow: hidden;
 }
 
-.stats-modal-overlay {
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00ff88, #ff0088, #8800ff, #00ff88);
+  border-radius: 20px;
+  z-index: -1;
+  animation: border-rotation-fast 3s linear infinite;
+}
+
+@keyframes border-rotation-fast {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.stat-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 60px rgba(0, 255, 136, 0.6);
+  border-color: #ff0088;
+}
+
+.stat-card.quantum {
+  border-color: #8800ff;
+  box-shadow: 0 0 40px rgba(136, 0, 255, 0.3);
+}
+
+.stat-card.quantum:hover {
+  box-shadow: 0 0 60px rgba(136, 0, 255, 0.6);
+  border-color: #ff8800;
+}
+
+.stat-card.chaos {
+  border-color: #ff0088;
+  box-shadow: 0 0 40px rgba(255, 0, 136, 0.3);
+}
+
+.stat-card.chaos:hover {
+  box-shadow: 0 0 60px rgba(255, 0, 136, 0.6);
+  border-color: #00ff88;
+}
+
+.stat-card.mathematical {
+  border-color: #ff8800;
+  box-shadow: 0 0 40px rgba(255, 136, 0, 0.3);
+}
+
+.stat-card.mathematical:hover {
+  box-shadow: 0 0 60px rgba(255, 136, 0, 0.6);
+  border-color: #8800ff;
+}
+
+.stat-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #00ff88;
+  text-shadow: 0 0 15px #00ff88;
+  position: relative;
+  text-align: center;
+}
+
+.stat-card.quantum h3 {
+  color: #8800ff;
+  text-shadow: 0 0 15px #8800ff;
+}
+
+.stat-card.chaos h3 {
+  color: #ff0088;
+  text-shadow: 0 0 15px #ff0088;
+}
+
+.stat-card.mathematical h3 {
+  color: #ff8800;
+  text-shadow: 0 0 15px #ff8800;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 136, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.stat-item:hover::before {
+  left: 100%;
+}
+
+.stat-item:hover {
+  background: rgba(0, 255, 136, 0.2);
+  border-color: #00ff88;
+  transform: translateX(10px);
+  box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+}
+
+.stat-item span:first-child {
+  font-weight: bold;
+  color: #00ff88;
+}
+
+.stat-item span:last-child {
+  color: #ff0088;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.chart-container {
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #8800ff;
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(136, 0, 255, 0.1) 10px,
+    rgba(136, 0, 255, 0.1) 20px
+  );
+  animation: constant-flow-fast 15s linear infinite;
+}
+
+@keyframes constant-flow-fast {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.chart-container h3 {
+  color: #8800ff;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 15px #8800ff;
+  position: relative;
+  z-index: 1;
+}
+
+.quantum-chart {
+  position: relative;
+  z-index: 1;
+}
+
+.superposition-state {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(136, 0, 255, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(136, 0, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.superposition-state:hover {
+  background: rgba(136, 0, 255, 0.2);
+  border-color: #8800ff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(136, 0, 255, 0.3);
+}
+
+.state-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.state-info span {
+  color: #8800ff;
+  font-weight: bold;
+}
+
+.probability-bar {
+  height: 8px;
+  background: linear-gradient(90deg, #8800ff, #ff0088);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.probability-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: probability-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes probability-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.attractor-chart {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.attractor-chart svg {
+  border: 2px solid rgba(255, 0, 136, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 30px rgba(255, 0, 136, 0.2);
+}
+
+.physics-constants {
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid #ff8800;
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.physics-constants::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 30% 70%,
+      rgba(255, 136, 0, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 136, 0, 0.1) 0%,
+      transparent 50%
+    );
+  animation: constant-pulse 10s ease-in-out infinite;
+}
+
+@keyframes constant-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.physics-constants h3 {
+  color: #ff8800;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 15px #ff8800;
+  position: relative;
+  z-index: 1;
+}
+
+.constants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.constant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 136, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 136, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.constant::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 136, 0, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.constant:hover::before {
+  left: 100%;
+}
+
+.constant:hover {
+  background: rgba(255, 136, 0, 0.2);
+  border-color: #ff8800;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 136, 0, 0.4);
+}
+
+.constant span:first-child {
+  font-weight: bold;
+  color: #ff8800;
+}
+
+.constant span:last-child {
+  color: #00ff88;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 2rem;
+  color: #00ff88;
+  text-shadow: 0 0 20px #00ff88;
+  animation: loading-pulse 2s ease-in-out infinite;
+}
+
+@keyframes loading-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.error {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ff0088;
+  text-shadow: 0 0 15px #ff0088;
+  background: rgba(255, 0, 136, 0.1);
+  border: 2px solid #ff0088;
+  border-radius: 10px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+/* Quantum particle effects */
+@keyframes particle-float-extended {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-30px) rotate(90deg) scale(1.2);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg) scale(0.8);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateY(-40px) rotate(270deg) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.stats-page::after {
+  content: '⚛️ 🌊 🔬 🌌 🎻';
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 2.5rem;
+  animation: particle-float-extended 8s ease-in-out infinite;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Matrix-style background effect */
+@keyframes matrix-rain-extended {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.matrix-rain-extended {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.18);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stats-modal {
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(60,60,120,0.13);
-  padding: 36px;
-  min-width: 340px;
-  max-width: 90vw;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  position: relative;
-}
-
-.stats-modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 22px;
-  color: #64748b;
-  cursor: pointer;
-}
-
-.stats-modal-title {
-  margin: 0;
-  font-weight: 700;
-  color: #0ea5e9;
-}
-
-.stats-form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.stats-input {
-  padding: 0.7em 1em;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  font-size: 16px;
-}
-
-.stats-submit-btn {
-  background: #0ea5e9;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.7em 2em;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  min-width: 120px;
-  transition: background 0.2s;
-}
-
-.stats-table-container {
-  background: var(--color-surface);
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(60,60,120,0.07);
-  padding: 0;
   width: 100%;
-  box-sizing: border-box;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
 }
 
-.stats-table-header {
-  display: flex;
-  font-weight: 700;
-  font-size: 18px;
-  color: #0ea5e9;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 8px 0;
+.matrix-rain-extended::before {
+  content: '01';
+  position: absolute;
+  color: rgba(0, 255, 136, 0.1);
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  animation: matrix-rain-extended 15s linear infinite;
+  left: calc(random() * 100vw);
 }
 
-.stats-table-actions {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+/* Quantum entanglement effect */
+.entanglement-effect-extended {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 30% 70%,
+      rgba(0, 255, 136, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(255, 0, 136, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(136, 0, 255, 0.05) 0%,
+      transparent 50%
+    );
+  animation: entanglement-pulse-extended 12s ease-in-out infinite;
+  pointer-events: none;
 }
 
-.stats-table-row {
-  display: flex;
-  border-bottom: 1px solid #e2e8f0;
-  align-items: center;
-  font-size: 16px;
-  min-height: 40px;
+@keyframes entanglement-pulse-extended {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    opacity: 0.6;
+    transform: scale(1.2) rotate(90deg);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.8) rotate(180deg);
+  }
+  75% {
+    opacity: 0.7;
+    transform: scale(1.1) rotate(270deg);
+  }
 }
 
-.stats-table-date {
-  flex: 2;
-  padding-left: 12px;
+/* Responsive design */
+@media (max-width: 768px) {
+  .stats-page {
+    padding: 1rem;
+  }
+
+  .stats-page h1 {
+    font-size: 2rem;
+  }
+
+  .timeframe-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timeframe-selector button {
+    width: 200px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
+
+  .constants-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-item,
+  .constant {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .state-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
-.stats-table-desc {
-  flex: 3;
+/* Quantum chaos animations */
+@keyframes chaos-rotation {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(90deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(180deg) scale(0.9);
+  }
+  75% {
+    transform: rotate(270deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
 }
 
-.stats-table-cal {
-  flex: 1;
+.stat-card.chaos {
+  animation: chaos-rotation 20s ease-in-out infinite;
 }
 
-.stats-edit-btn {
-  background: none;
-  color: #0ea5e9;
-  border: none;
-  border-radius: 6px;
-  padding: 0.3em;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Mathematical physics animations */
+@keyframes mathematical-oscillation {
+  0%,
+  100% {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
 }
 
-.stats-delete-btn {
-  background: none;
-  color: #e11d48;
-  border: none;
-  border-radius: 6px;
-  padding: 0.3em;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.stat-card.mathematical {
+  animation: mathematical-oscillation 3s ease-in-out infinite;
 }
 
-.stats-edit-modal-btn {
-  background: #10b981;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.7em 2em;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  min-width: 120px;
-  transition: background 0.2s;
+/* Quantum field animations */
+@keyframes quantum-field-fluctuation {
+  0%,
+  100% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  25% {
+    filter: hue-rotate(90deg) brightness(1.2);
+  }
+  50% {
+    filter: hue-rotate(180deg) brightness(0.8);
+  }
+  75% {
+    filter: hue-rotate(270deg) brightness(1.1);
+  }
 }
 
-.upload-file-label {
-  display: inline-block;
-  padding: 0.6em 1.2em;
-  border-radius: 8px;
-  background: var(--color-secondary);
-  color: var(--color-contrast);
-  font-weight: 600;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  border: none;
-  margin-bottom: 0.5em;
-}
-.upload-file-label:hover, .upload-file-label:focus {
-  background: var(--color-primary);
-  color: var(--color-contrast);
-}
-.upload-file-input {
-  display: none;
+.stat-card.quantum {
+  animation: quantum-field-fluctuation 8s ease-in-out infinite;
 }

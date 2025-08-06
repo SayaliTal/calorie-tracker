@@ -4,11 +4,13 @@ import { AppService } from './app.service';
 import { AuthModule } from '../auth/auth.module';
 import { CalorieModule } from '../calorie/calorie.module';
 import { UserModule } from '../user/user.module';
+import { QuantumModule } from '../quantum/quantum.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
 import { Calorie } from 'src/calorie/calorie.entity';
+import { UserActivity } from 'src/user-activity/user-activity.entity';
 import { SessionMiddleware } from './session.middleware';
 import { CalorieController } from 'src/calorie/calorie.controller';
 
@@ -18,7 +20,7 @@ import { CalorieController } from 'src/calorie/calorie.controller';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: process.env.DB_NAME,
-      entities: [User, Calorie],
+      entities: [User, Calorie, UserActivity],
       synchronize: true,
     }),
     JwtModule.register({
@@ -32,6 +34,7 @@ import { CalorieController } from 'src/calorie/calorie.controller';
     AuthModule,
     CalorieModule,
     UserModule,
+    QuantumModule,
   ],
   controllers: [AppController],
   providers: [AppService],

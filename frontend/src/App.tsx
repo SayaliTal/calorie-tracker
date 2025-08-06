@@ -1,32 +1,32 @@
-import "./theme/theme.css";
-import "./App.css";
-import { useState } from "react";
+import './theme/theme.css';
+import './App.css';
+import { useState } from 'react';
 import {
   Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
-} from "react-router-dom";
-import ProtectedPage from "./components/ProtectedPage";
-import LandingPage from "./pages/LandingPage";
-import StatsPage from "./pages/StatsPage";
-import { ThemeProvider } from "./theme/ThemeContext";
-import { Layout } from "./ui";
-import Header from "./ui/Header";
+} from 'react-router-dom';
+import ProtectedPage from './components/ProtectedPage';
+import LandingPage from './pages/LandingPage';
+import StatsPage from './pages/StatsPage';
+import { ThemeProvider } from './theme/ThemeContext';
+import { Layout } from './ui';
+import Header from './ui/Header';
 
 function App() {
   const [token, setToken] = useState<string | null>(() => {
-    return sessionStorage.getItem("accessToken");
+    return sessionStorage.getItem('accessToken');
   });
 
   const handleLogin = (newToken: string) => {
     setToken(newToken);
-    sessionStorage.setItem("accessToken", newToken);
+    sessionStorage.setItem('accessToken', newToken);
   };
 
   const handleLogout = () => {
     setToken(null);
-    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem('accessToken');
   };
 
   return (
@@ -36,17 +36,17 @@ function App() {
         <Layout>
           <Routes>
             <Route
-              path="/"
+              path='/'
               element={
                 !token ? (
                   <LandingPage onLogin={handleLogin} />
                 ) : (
-                  <Navigate to="/stats" replace />
+                  <Navigate to='/stats' replace />
                 )
               }
             />
             <Route
-              path="/stats"
+              path='/stats'
               element={
                 <ProtectedPage>
                   <StatsPage />
