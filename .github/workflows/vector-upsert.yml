@@ -1,11 +1,11 @@
 name: Vector Upsert
 
 on:
-  schedule:
-    # Run daily at 2 AM UTC
-    - cron: '0 2 * * *'
+  # Disabled: schedule:
+  #   # Run daily at 2 AM UTC
+  #   - cron: '0 2 * * *'
   workflow_dispatch:
-    # Allow manual trigger
+    # Manual trigger only - workflow is disabled
 
 jobs:
   vector-upsert:

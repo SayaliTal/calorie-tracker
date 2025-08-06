@@ -1,8 +1,15 @@
 name: PR Analysis with Flowise Agent
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  # Disabled: pull_request:
+  #   types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    # Manual trigger only - workflow is disabled
+    inputs:
+      pull_number:
+        description: 'Pull request number'
+        required: true
+        type: string
 
 jobs:
   analyze-pr:
@@ -43,4 +50,4 @@ jobs:
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-          PULL_NUMBER: ${{ github.event.pull_request.number }}
+          PULL_NUMBER: ${{ github.event.inputs.pull_number || github.event.pull_request.number }}
