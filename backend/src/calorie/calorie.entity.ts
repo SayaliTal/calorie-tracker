@@ -34,4 +34,10 @@ export class Calorie extends BaseEntity {
 
   @Column({ type: 'boolean', default: false })
   deleted: boolean;
+
+  @Column({ type: 'text', nullable: true })
+  foodType?: string;
+
+  @Column({ type: 'text', nullable: true })
+  quantumData?: string;
 }

@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from '../auth/auth.module';
 import { CalorieModule } from '../calorie/calorie.module';
 import { UserModule } from '../user/user.module';
+import { QuantumModule } from '../quantum/quantum.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -32,6 +33,7 @@ import { CalorieController } from 'src/calorie/calorie.controller';
     AuthModule,
     CalorieModule,
     UserModule,
+    QuantumModule,
   ],
   controllers: [AppController],
   providers: [AppService],
