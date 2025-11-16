@@ -132,4 +132,128 @@ export class CalorieService {
     }
     return { success: true, message: `Inserted ${totalInserted} records for 30 days for userId ${user.id}.` };
   }
+
+  /**
+   * Calculate calories needed to burn based on user weight and activity level
+   * @param weightInKg - User's weight in kilograms
+   * @param heightInCm - User's height in centimeters (optional, for more accurate calculations)
+   * @param age - User's age (optional, for more accurate calculations)
+   * @param gender - User's gender (optional, for more accurate calculations)
+   * @param activityLevel - Activity level: 'sedentary', 'light', 'moderate', 'active', 'very_active'
+   * @param goal - Goal: 'maintain', 'lose', 'gain'
+   * @param targetWeightInKg - Target weight in kg (optional, for weight loss/gain goals)
+   * @returns Object containing calorie calculations
+   */
+  calculateCaloriesToBurn(
+    weightInKg: number,
+    heightInCm?: number,
+    age?: number,
+    gender?: 'male' | 'female',
+    activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active' = 'moderate',
+    goal: 'maintain' | 'lose' | 'gain' = 'maintain',
+    targetWeightInKg?: number
+  ) {
+    // Activity multipliers
+    const activityMultipliers = {
+      sedentary: 1.2,      // Little or no exercise
+      light: 1.375,         // Light exercise 1-3 days/week
+      moderate: 1.55,       // Moderate exercise 3-5 days/week
+      active: 1.725,        // Hard exercise 6-7 days/week
+      very_active: 1.9      // Very hard exercise, physical job
+    };
+
+    // Calculate Basal Metabolic Rate (BMR) using Mifflin-St Jeor Equation
+    let bmr = 0;
+    if (heightInCm && age && gender) {
+      // More accurate calculation with all parameters
+      if (gender === 'male') {
+        bmr = 10 * weightInKg + 6.25 * heightInCm - 5 * age + 5;
+      } else {
+        bmr = 10 * weightInKg + 6.25 * heightInCm - 5 * age - 161;
+      }
+    } else {
+      // Simplified calculation using only weight (less accurate but still useful)
+      bmr = weightInKg * 24; // Rough estimate: 24 calories per kg of body weight
+    }
+
+    // Calculate Total Daily Energy Expenditure (TDEE)
+    const tdee = bmr * activityMultipliers[activityLevel];
+
+    // Calculate calories for different goals
+    let dailyCalories = tdee;
+    let caloriesToBurn = 0;
+    let weeklyCalorieDeficit = 0;
+
+    switch (goal) {
+      case 'lose':
+        // For weight loss: create a calorie deficit
+        // 1 kg of fat = 7700 calories
+        if (targetWeightInKg && targetWeightInKg < weightInKg) {
+          const weightToLose = weightInKg - targetWeightInKg;
+          const totalCaloriesToBurn = weightToLose * 7700;
+          // Assuming 12 weeks to reach target weight
+          weeklyCalorieDeficit = totalCaloriesToBurn / 12;
+        } else {
+          // Default: 500 calorie daily deficit for 0.5 kg/week weight loss
+          weeklyCalorieDeficit = 500 * 7;
+        }
+        dailyCalories = tdee - (weeklyCalorieDeficit / 7);
+        caloriesToBurn = weeklyCalorieDeficit / 7;
+        break;
+
+      case 'gain':
+        // For weight gain: create a calorie surplus
+        if (targetWeightInKg && targetWeightInKg > weightInKg) {
+          const weightToGain = targetWeightInKg - weightInKg;
+          const totalCaloriesToGain = weightToGain * 7700;
+          weeklyCalorieDeficit = -totalCaloriesToGain / 12; // Negative for surplus
+        } else {
+          // Default: 300 calorie daily surplus for 0.3 kg/week weight gain
+          weeklyCalorieDeficit = -300 * 7;
+        }
+        dailyCalories = tdee - (weeklyCalorieDeficit / 7);
+        caloriesToBurn = 0; // No calories to burn for weight gain
+        break;
+
+      case 'maintain':
+      default:
+        dailyCalories = tdee;
+        caloriesToBurn = 0;
+        break;
+    }
+
+    // Calculate calories burned through different activities (per hour)
+    const activityCalories = {
+      walking: Math.round(weightInKg * 3.5),           // 3.5 METs
+      jogging: Math.round(weightInKg * 7),             // 7 METs
+      running: Math.round(weightInKg * 11.5),          // 11.5 METs
+      cycling: Math.round(weightInKg * 8),             // 8 METs
+      swimming: Math.round(weightInKg * 6),             // 6 METs
+      weightlifting: Math.round(weightInKg * 3),       // 3 METs
+      yoga: Math.round(weightInKg * 2.5),              // 2.5 METs
+      dancing: Math.round(weightInKg * 4.5),           // 4.5 METs
+    };
+
+    return {
+      weightInKg,
+      heightInCm,
+      age,
+      gender,
+      activityLevel,
+      goal,
+      targetWeightInKg,
+      bmr: Math.round(bmr),
+      tdee: Math.round(tdee),
+      dailyCalories: Math.round(dailyCalories),
+      caloriesToBurn: Math.round(caloriesToBurn),
+      weeklyCalorieDeficit: Math.round(weeklyCalorieDeficit),
+      activityCalories,
+      recommendations: {
+        dailyCalorieIntake: Math.round(dailyCalories),
+        dailyCalorieBurn: Math.round(caloriesToBurn),
+        weeklyWeightChange: goal === 'lose' ? -0.5 : goal === 'gain' ? 0.3 : 0,
+        activityMinutes: goal === 'lose' ? Math.round((caloriesToBurn / activityCalories.walking) * 60) : 0
+      }
+    };
+  }
 }
