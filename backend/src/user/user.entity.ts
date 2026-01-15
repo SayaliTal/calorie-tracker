@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { UserStatusEnum } from './user.enum';
 import { Calorie } from '../calorie/calorie.entity';
+import { UserActivity } from '../user-activity/user-activity.entity';
 
 @Entity()
 @Unique('UQ_user_email', ['email'])
@@ -40,6 +41,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Calorie, (calorie) => calorie.user)
   calories?: Calorie[];
+
+  @OneToMany(() => UserActivity, (activity) => activity.user)
+  activities?: UserActivity[];
 
   @CreateDateColumn()
   createdAt: Date;
